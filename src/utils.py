@@ -1,7 +1,8 @@
 import os
 from telegram.ext import ContextTypes
 from telegram.constants import ParseMode
-from telegram import Update, BotCommand, BotCommandScopeChat, MenuButtonCommands
+from telegram import (Update, BotCommand, BotCommandScopeChat, MenuButtonCommands, InlineKeyboardButton,
+                      InlineKeyboardMarkup)
 
 
 def load_message(name: str) -> str:
@@ -42,4 +43,26 @@ async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE, com
     await context.bot.set_chat_menu_button(
         menu_button=MenuButtonCommands(),
         chat_id=update.effective_chat.id
+    )
+
+
+def load_prompt(name: str):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    prompt_path = os.path.join(current_dir, 'resources', 'prompts', f'{name}.txt')
+    with open(prompt_path, "r", encoding="utf-8") as file:
+        return file.read()
+
+
+async def send_text_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str, buttons: dict):
+    text = text.encode('utf8', errors='surrogatepass').decode('utf8')
+    keyboard = []
+    for key, value in buttons.items():
+        button = InlineKeyboardButton(str(value), callback_data=str(key))
+        keyboard.append([button])
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    return await context.bot.send_message(
+        chat_id=update.effective_message.chat_id,
+        text=text,
+        reply_markup=reply_markup,
+        message_thread_id=update.effective_message.message_thread_id
     )
