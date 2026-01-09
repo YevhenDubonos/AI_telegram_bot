@@ -61,8 +61,11 @@ async def random_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     query = update.callback_query
     await query.answer()
     data = query.data
+
     if data == 'random':
         await random(update, context)
+    elif data == 'foresight':
+        await foresight(update, context)
     elif data == 'start':
         await start(update, context)
 
@@ -241,15 +244,3 @@ async def foresight(update: Update, context: ContextTypes.DEFAULT_TYPE):
             chat_id=update.effective_chat.id,
             message_id=message_to_delete.message_id
         )
-
-async def random_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    data = query.data
-
-    if data == 'random':
-        await random(update, context)
-    elif data == 'foresight':
-        await foresight(update, context)
-    elif data == 'start':
-        await start(update, context)
