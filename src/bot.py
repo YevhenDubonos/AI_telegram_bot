@@ -9,6 +9,7 @@ app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("random", random))
 app.add_handler(CommandHandler("gpt", gpt))
 app.add_handler(CommandHandler("talk", talk))
+app.add_handler(CommandHandler("foresight", foresight))
 app.add_handler(CallbackQueryHandler(random_button, pattern='^(random|start)$'))
 app.add_handler(
     CallbackQueryHandler(talk_button, pattern='^(talk_linus_torvalds|talk_guido_van_rossum|talk_mark_zuckerberg)$'))

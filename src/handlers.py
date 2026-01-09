@@ -28,6 +28,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             'random': 'Дізнатися випадковий факт',
             'gpt': 'Запитати ChatGPT',
             'talk': 'Діалог з відомою особистістю',
+            'foresight': '🔮 Отримати передбачення',
         }
     )
 
@@ -211,3 +212,44 @@ async def show_funny_response(update: Update, context: ContextTypes.DEFAULT_TYPE
     """
     full_message = f"{random_response}\n{available_commands}"
     await update.message.reply_text(full_message)
+
+
+async def foresight(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_image(update, context, "foresight")
+    message_to_delete = await send_text(update, context, "Заглядаю в майбутнє... 🔮")
+
+    try:
+        prompt = load_prompt("foresight")
+        prediction = await chatgpt_service.send_question(
+            prompt_text=prompt,
+            message_text="Дай коротке випадкове передбачення"
+        )
+
+        buttons = {
+            'foresight': '🔮 Ще одне передбачення',
+            'start': 'Закінчити'
+        }
+
+        await send_text_buttons(update, context, prediction, buttons)
+
+    except Exception as e:
+        logger.error(f"Помилка в foresight: {e}")
+        await send_text(update, context, "Не вдалося отримати передбачення 😕")
+
+    finally:
+        await context.bot.delete_message(
+            chat_id=update.effective_chat.id,
+            message_id=message_to_delete.message_id
+        )
+
+async def random_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    data = query.data
+
+    if data == 'random':
+        await random(update, context)
+    elif data == 'foresight':
+        await foresight(update, context)
+    elif data == 'start':
+        await start(update, context)
