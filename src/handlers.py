@@ -28,7 +28,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             'random': 'Дізнатися випадковий факт',
             'gpt': 'Запитати ChatGPT',
             'talk': 'Діалог з відомою особистістю',
-            'it_beginner': '💻 Новачку в IT',
             'foresight': '🔮 Отримати передбачення',
         }
     )
@@ -67,10 +66,10 @@ async def random_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await random(update, context)
     elif data == 'foresight':
         await foresight(update, context)
-    elif data == 'it_beginner':
-        await it_beginner(update, context)
     elif data == 'start':
         await start(update, context)
+    elif data == 'it_beginner':
+        await it_beginner(update, context)
 
 
 async def gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -256,7 +255,7 @@ async def it_beginner(update: Update, context: ContextTypes.DEFAULT_TYPE):
         prompt = load_prompt("it_beginner")
         advice = await chatgpt_service.send_question(
             prompt_text=prompt,
-            message_text="Дай коротку корисну пораду для людини, яка тільки починає шлях в IT"
+            message_text="Дай коротку корисну пораду для новачка в IT"
         )
 
         buttons = {

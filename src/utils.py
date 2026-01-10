@@ -1,6 +1,5 @@
 import os
 from telegram.ext import ContextTypes
-from telegram.constants import ParseMode
 from telegram import (Update, BotCommand, BotCommandScopeChat, MenuButtonCommands, InlineKeyboardButton,
                       InlineKeyboardMarkup)
 
@@ -13,11 +12,9 @@ def load_message(name: str) -> str:
 
 
 async def send_text(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str):
-    text = text.encode('utf8').decode('utf8')
     return await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=text,
-        parse_mode=ParseMode.MARKDOWN
+        text=text
     )
 
 

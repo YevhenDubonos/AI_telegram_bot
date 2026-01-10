@@ -1,4 +1,4 @@
-# Telegram ChatGPT Bot
+﻿# Telegram ChatGPT Bot
 
 A versatile Telegram bot that integrates with OpenAI's ChatGPT to provide various interactive features.
 
@@ -58,7 +58,6 @@ Create a `.env` file in the project root and add your tokens:
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 OPENAI_API_KEY=your_openai_api_key
 ```
-
 ---
 
 ### ✔ Usage
@@ -77,7 +76,8 @@ Available commands:
 - `/random` - Get a random fact
 - `/gpt` - Chat with ChatGPT
 - `/talk` - Chat with a celebrity personality
-
+- `/foresight` - Get a prediction from the universe
+- `/it_beginner` - tip for beginners
 ---
 
 ### ✔ Project Structure
@@ -133,3 +133,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 ---
+

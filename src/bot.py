@@ -11,7 +11,7 @@ app.add_handler(CommandHandler("gpt", gpt))
 app.add_handler(CommandHandler("talk", talk))
 app.add_handler(CommandHandler("foresight", foresight))
 app.add_handler(CommandHandler("it_beginner", it_beginner))
-app.add_handler(CallbackQueryHandler(random_button, pattern='^(random|start|foresight)$'))
+app.add_handler(CallbackQueryHandler(random_button, pattern='^(random|start|foresight|it_beginner)$'))
 app.add_handler(
     CallbackQueryHandler(talk_button, pattern='^(talk_linus_torvalds|talk_guido_van_rossum|talk_mark_zuckerberg)$'))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
