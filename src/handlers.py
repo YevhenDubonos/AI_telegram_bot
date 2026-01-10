@@ -28,6 +28,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             'random': 'Дізнатися випадковий факт',
             'gpt': 'Запитати ChatGPT',
             'talk': 'Діалог з відомою особистістю',
+            'it_beginner': '💻 Новачку в IT',
             'foresight': '🔮 Отримати передбачення',
         }
     )
@@ -66,6 +67,8 @@ async def random_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await random(update, context)
     elif data == 'foresight':
         await foresight(update, context)
+    elif data == 'it_beginner':
+        await it_beginner(update, context)
     elif data == 'start':
         await start(update, context)
 
@@ -238,6 +241,34 @@ async def foresight(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(f"Помилка в foresight: {e}")
         await send_text(update, context, "Не вдалося отримати передбачення 😕")
+
+    finally:
+        await context.bot.delete_message(
+            chat_id=update.effective_chat.id,
+            message_id=message_to_delete.message_id
+        )
+
+async def it_beginner(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_image(update, context, "it_beginner")
+    message_to_delete = await send_text(update, context, "Підбираю пораду для старту в IT... 💻")
+
+    try:
+        prompt = load_prompt("it_beginner")
+        advice = await chatgpt_service.send_question(
+            prompt_text=prompt,
+            message_text="Дай коротку корисну пораду для людини, яка тільки починає шлях в IT"
+        )
+
+        buttons = {
+            'it_beginner': '💻 Ще порада',
+            'start': 'Закінчити'
+        }
+
+        await send_text_buttons(update, context, advice, buttons)
+
+    except Exception as e:
+        logger.error(f"Помилка в it_beginner: {e}")
+        await send_text(update, context, "Не вдалося отримати пораду 😕")
 
     finally:
         await context.bot.delete_message(
