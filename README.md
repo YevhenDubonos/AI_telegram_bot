@@ -104,7 +104,11 @@ open_ai_telegram_bot
             ├── talk_guido_van_rossum.txt
             ├── talk_linus_torvalds.txt
             └── talk_mark_zuckerberg.txt
-```
+            ├── foresight.txt
+            └── it_beginner.txt
+
+
+```         
 
 ---
 
